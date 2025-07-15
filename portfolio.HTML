@@ -3,323 +3,764 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nompie Mthombeni Dube - Application System Support</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .center-text 
-        {
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --text: #333;
+            --gray: #95a5a6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 40px 20px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .profile-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .profile-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid white;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .profile-photo:hover {
+            transform: scale(1.05);
+        }
+        
+        .initials {
+            font-size: 4rem;
+            font-weight: bold;
+            opacity: 0.1;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--light);
+            font-weight: 300;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: background 0.3s;
+        }
+        
+        .contact-item:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .contact-item i {
+            color: var(--secondary);
+        }
+        
+        a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        a:hover {
+            color: var(--secondary);
+        }
+        
+        section {
+            background: white;
+            margin: 20px 0;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light);
+            position: relative;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100px;
+            height: 2px;
+            background: var(--secondary);
+        }
+        
+        h3 {
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+        
+        .job, .education {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed var(--light);
+        }
+        
+        .job:last-child, .education:last-child {
+            border-bottom: none;
+        }
+        
+        .job-header, .edu-header {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+        
+        .company, .school {
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .location {
+            color: var(--gray);
+            font-style: italic;
+        }
+        
+        .date {
+            background: var(--light);
+            color: var(--dark);
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.9rem;
+        }
+        
+        ul {
+            padding-left: 20px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+            position: relative;
+        }
+        
+        li::before {
+            content: '•';
+            color: var(--secondary);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+        
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .skill-category {
+            margin-bottom: 20px;
+        }
+        
+        .skill-category h4 {
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .skill {
+            background: var(--light);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: transform 0.2s, background 0.3s;
+        }
+        
+        .skill:hover {
+            background: var(--secondary);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .certifications {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .certification {
+            background: var(--light);
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .certification:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .cert-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .cert-issuer {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .cert-date {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: 5px;
+        }
+        
+        .references {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .reference {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 5px;
+            transition: transform 0.3s;
+        }
+        
+        .reference:hover {
+            transform: translateY(-5px);
+        }
+        
+        .ref-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .ref-company {
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .ref-contact {
+            color: var(--gray);
+        }
+        
+        .courses {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .course {
+            background: var(--light);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .course:hover {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .title {
+                font-size: 1.2rem;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            section {
+                padding: 20px;
+            }
+            
+            .job-header, .edu-header {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .skills-container, .certifications, .references {
+                grid-template-columns: 1fr;
+            }
+            
+            .profile-photo {
+                width: 140px;
+                height: 140px;
+            }
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        section {
+            animation: fadeIn 0.5s ease-out forwards;
+            opacity: 0;
+        }
+        
+        section:nth-child(1) { animation-delay: 0.1s; }
+        section:nth-child(2) { animation-delay: 0.2s; }
+        section:nth-child(3) { animation-delay: 0.3s; }
+        section:nth-child(4) { animation-delay: 0.4s; }
+        section:nth-child(5) { animation-delay: 0.5s; }
+        section:nth-child(6) { animation-delay: 0.6s; }
+        
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--secondary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 99;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
         }
     </style>
-
-    <title>My Portfolio</title>
-    <link rel="stylesheet" href="Portfolio.css">
 </head>
 <body>
     <header>
-        <h1>My Portfolio </h1>
-           <nav>
-                <ul>
-                      <li><a href="#about me">about Me</a></li>
-                      <li><a href="#skills">skills</a></li>
-                      <li><a href="#contact">contact</a></li>
-                      <li><a href="#qualifications">qualifications</a></li>
-                      <li><a href="https://www.linkedin.com/in/nompie-mthombeni-b4578782?" target="_blank">LinkedIn</a>
-                      <li><a href="https://github.com/Nompie1993" target="_blank">github</a>
-
-                </ul>
-           </nav>
-    </header>
-    <main>
-    
-            <section id="about me">
-                <h2>About Me</h2>
-                <div class="center-text">
-                    <img src="c:\Users\NompieM\Desktop\IMG_MIRROR_20250402_121140.jpeg" alt="Centered Image" class="resize">
+        <div class="initials">NMD</div>
+        <div class="header-content">
+            <div class="profile-container">
+                <!-- Your photo has been added here -->
+                <img src="IMG_20250505_072904_1.jpg" alt="Nompie Mthombeni Dube" class="profile-photo">
+                <div>
+                    <h1>Nompie Mthombeni Dube</h1>
+                    <div class="title">Application System Support</div>
                 </div>
-                    <p>Hi, I'm Nompie Mthombeni Dube, currently working at Technetium as an Application,Website and MS SQL Support Technician. My current responsibility are as follows:</p>
-                  <ul>
-                        <li>Proficient in SQL Server, utilizing query tools to write SELECT statements for multi-table data retrieval, data sorting, and filtering.</li>
-                        <li>Adept at using built-in functions, creating data groups, and aggregating results efficiently.</li>
-                        <li>Skilled in modifying data with Transact-SQL, including INSERT, UPDATE, DELETE, and MERGE operations.</li>
-                        <li>Experienced in barcode printing and RFID network maintenance.</li>
-                        <li>Led new client deployment initiatives with an emphasis on seamless integration.</li>
-                        <li>Provided daily customer support to enhance user experience and satisfaction.</li>
-                        <li>Conducted training and testing sessions to ensure optimal software utilization.</li>
-                        <li>Responsible for the creation and updates of training literature.</li>
-                  </ul>
-            </section>
-         <section id="skills">
-            <h2>skills</h2>
-            <h2 id="MotivationMessage">Hello Future Developers</h2>
-            <button onclick="changeText()">Computer hardware and Software</button>
-            <button onclick="modifyStyles()">Modify Styles</button>
-            <button onclick="addElement()">Azure and AWS Cloud Administrator</button>
-            <!-- A placeholder for dynamically added elements -->
-            <div id="container"></div>
-            <button onclick="removeElement()">removeElement</button>
-            <nav>
-
-                <ul>
-                    <li><a href="#Computer hardware and software" >Computer hardware and Software</a></li>
-                    <li><a href="#Azure and AWS Cloud Administrator">Azure and AWS Cloud Administrator</a></li>
-                    <li><a href="#HTML">HTML</a></li>
-                    <li><a href="#MSSQL">MSSQL</a></li>
-                    <li><a href="#PYTHON">PYTHON</a></li>
-                
-               </ul>
-            </nav>
-        <section id="Computer hardware and software">
-            <h2>TECHNICAL AND SOFTWARE</h2>
-              <ul>
-                <li class="category">Computer Assembly and Maintenance:</li>
-                    <ul>
-                        <li>Building and upgrading PCs.</li>
-                        <li>Troubleshooting hardware issues.</li>
-                        <li>Installing and configuring peripherals (printers, scanners, etc.).</li>
-                    </ul>
-                       <li class="category">Networking:</li>
-                    <ul>
-                        <li>Setting up and managing routers and switches.</li>
-                        <li>Understanding network protocols and configurations.</li>
-                        <li>Troubleshooting network connectivity issues.</li>
-                    </ul>
-                        <li class="category">System Administration:</li>
-                    <ul>
-                        <li>Managing servers and storage solutions.</li>
-                        <li>Implementing backup and recovery solutions.</li>
-                        <li>Monitoring system performance and security.</li>
-                    </ul>
-                    </ul>
-                
-                 <h2>Software Skills</h2>
-                    <ul>
-                        <li class="category">Programming and Development:</li>
-                    <ul>
-                        <li>Proficiency in languages like Python, C#.</li>
-                        <li>Experience with version control systems (Git).</li>
-                    /ul>
-                        <li class="category">Database Management:</li>
-                    <ul>
-                        <li>Designing and managing databases (SQL).</li>
-                        <li>Writing and optimizing queries.</li>
-                        <li>Ensuring data integrity and security.</li>
-                    </ul>
-                        <li class="category">Operating Systems:</li>
-                     <ul>
-                        <li>Proficiency with Windows.</li>
-                        <li>Command-line interface (CLI) skills.</li>
-                    </ul>
-                        <li class="category">Software Applications:</li>
-                    <ul>
-                        <li>Expertise in productivity software (Microsoft Office, Google Workspace).</li>
-                    </ul>
-                </nav>
-                    </ul>
-            </body>
-
-            <section id="Azure Cloud Administrator">
-                <h2>Azure Administration</h2>
-                    <ul>
-                        <li class="category">Azure Services Management:</li>
-                    <ul>
-                        <li>Proficiency in managing Azure resources like virtual machines, storage accounts, and virtual networks.</li>
-                        <li>Understanding of Azure Active Directory (Azure AD) for identity and access management.</li>
-                    </ul>
-                         <li class="category">Networking:</li>
-                    <ul>
-                        <li>Configuring and managing virtual networks, subnets, and network security groups.</li>
-                        
-                    </ul>
-                        <li class="category">Security:</li>
-                    <ul>
-                        <li>Implementing security measures such as firewalls, encryption, and threat protection.</li>
-                           
-                    </ul>
-                        <li class="category">Monitoring and Troubleshooting:</li>
-                    <ul>
-                        <li>Using Azure Monitor, Log Analytics, and Application Insights for monitoring and diagnostics.</li>
-                            
-                    </ul>
-                        
-                </body>
-                <section id="MSSQL">
-                  <h2>MS Transact-SQL</h2>
-                  <ul>
-                    <li class="category">Query Writing:</li>
-                    <ul>
-                        <li>Writing SELECT statements to retrieve data.</li>
-                        <li>Using JOINs to combine data from multiple tables.</li>
-                        <li>Implementing subqueries and common table expressions (CTEs).</li>
-                    </ul>
-                    <li class="category">Data Manipulation:</li>
-                    <ul>
-                        <li>Inserting, updating, and deleting data.</li>
-                        <li>Using transactions to ensure data integrity.</li>
-                        <li>Implementing error handling with TRY...CATCH blocks.</li>
-                    </ul>
-                    <li class="category">Performance Tuning:</li>
-                    <ul>
-                        <li>Optimizing queries for better performance.</li>
-                        <li>Using indexes to speed up data retrieval.</li>
-                        <li>Analyzing execution plans to identify bottlenecks.</li>
-                    </ul>
-                    <li class="category">Advanced T-SQL Features:</li>
-                    <ul>
-                        <li>Creating and managing stored procedures.</li>
-                        <li>Writing and using user-defined functions (UDFs).</li>
-                        <li>Implementing triggers for automated actions.</li>
-                    </ul>
-                    <li class="category">Data Analysis:</li>
-                    <ul>
-                        <li>Using aggregate functions to summarize data.</li>
-                        <li>Implementing window functions for advanced calculations.</li>
-                        <li>Creating complex reports with GROUP BY and HAVING clauses.</li>
-                    </ul>
-                <section id="HTML">
-                    <h2>HTML Skills</h2>
-                    <ul>
-                        <li class="category">Basic HTML:</li>
-                        <ul>
-                            <li>Understanding HTML structure and elements.</li>
-                            <li>Creating and formatting text with headings, paragraphs, and lists.</li>
-                            <li>Using links and images.</li>
-                        </ul>
-                       Forms and Input:</li>
-                        <ul>
-                            <li>Creating forms with input fields, buttons, and labels.</li>
-                            <li>Using form validation attributes.</li>
-                            <li>Handling form submissions.</li>
-                        </ul>
-                        <li class="category">Semantic HTML:</li>
-                        <ul>
-                            <li>Using semantic elements like &lt;header&gt;, &lt;footer&gt;, &lt;article&gt;, and &lt;section&gt;.</li>
-                            <li>Improving accessibility and SEO with semantic tags.</li>
-                        </ul>
-                        <li class="category">Multimedia:</li>
-                        <ul>
-                            <li>Embedding videos and audio files.</li>
-                            <li>Using the &lt;canvas&gt; element for graphics.</li>
-                        </ul>
-                        <section id="PYTHON">
-                            <h2>Python Skills</h2>
-                            <ul>
-                                <li class="category">Basic Python:</li>
-                                <ul>
-                                    <li>Understanding Python syntax and basic constructs.</li>
-                                    <li>Working with data types, variables, and operators.</li>
-                                    <li>Writing and using functions.</li>
-                                </ul>
-                                <li class="category">Data Structures:</li>
-                                <ul>
-                                    <li>Using lists, tuples, sets, and dictionaries.</li>
-                                    <li>Implementing list comprehensions and generator expressions.</li>
-                                </ul>
-                                <li class="category">Object-Oriented Programming (OOP):</li>
-                                <ul>
-                                    <li>Creating and using classes and objects.</li>
-                                    <li>Understanding inheritance, polymorphism, and encapsulation.</li>
-                                </ul>
-                                <li class="category">Modules and Packages:</li>
-                                <ul>
-                                    <li>Importing and using standard and third-party modules.</li>
-                                    <li>Creating and managing custom modules and packages.</li>
-                                </ul>
-                                <li class="category">File Handling:</li>
-                                <ul>
-                                    <li>Reading from and writing to files.</li>
-                                    <li>Working with different file formats (CSV, JSON, etc.).</li>
-                                </ul>
-                                <li class="category">Error Handling:</li>
-                                <ul>
-                                    <li>Using try, except, and finally blocks.</li>
-                                    <li>Creating custom exceptions.</li>
-                                </ul>
-                                <li class="category">Libraries and Frameworks:</li>
-                                <ul>
-                                    <li>Using popular libraries like NumPy, pandas, and Matplotlib.</li>
-                                    <li>Working with web frameworks like Django and Flask.</li>
-                                </ul>
-                                <li class="category">Data Analysis and Visualization:</li>
-                                <ul>
-                                    <li>Analyzing data with pandas.</li>
-                                    <li>Visualizing data with Matplotlib and Seaborn.</li>
-                                </ul>
-                                <li class="category">Automation and Scripting:</li>
-                                <ul>
-                                    <li>Writing scripts to automate tasks.</li>
-                                    <li>Using libraries like Selenium for web automation.</li>
-                                </ul>
-                                <section id="AWS Cloud Fundementals">
-                                    <h2>AWS Fundamentals Skills</h2>
-                                    <ul>
-                                        <li class="category">Compute Services:</li>
-                                        <ul>
-                                            <li>Launching and managing EC2 instances.</li>
-                                            <li>Using Lambda for serverless computing.</li>
-                                            <li>Auto-scaling and load balancing with EC2 Auto Scaling and ELB.</li>
-                                        </ul>
-                                        <li class="category">Storage Services:</li>
-                                        <ul>
-                                            <li>Managing S3 buckets and objects.</li>
-                                            <li>Using EBS for block storage.</li>
-                                            <li>Implementing backup and recovery with AWS Backup and Glacier.</li>
-                                        </ul>
-                                        <li class="category">Database Services:</li>
-                                        <ul>
-                                            <li>Setting up and managing RDS instances.</li>
-                                            <li>Using DynamoDB for NoSQL databases.</li>
-                                            <li>Implementing caching with ElastiCache.</li>
-                                        </ul>
-                                        <li class="category">Networking:</li>
-                                        <ul>
-                                            <li>Configuring VPCs, subnets, and route tables.</li>
-                                            <li>Implementing security groups and network ACLs.</li>
-                                            <li>Using Route 53 for DNS management.</li>
-                                        </ul>
-                                        <li class="category">Security and Identity:</li>
-                                        <ul>
-                                            <li>Managing IAM users, groups, and roles.</li>
-                                            <li>Implementing multi-factor authentication (MFA).</li>
-                                            <li>Using AWS Key Management Service (KMS) for encryption.</li>
-                                        </ul>
-                                        <li class="category">Monitoring and Management:</li>
-                                        <ul>
-                                            <li>Using CloudWatch for monitoring and logging.</li>
-                                            <li>Implementing CloudTrail for auditing and compliance.</li>
-                                            <li>Managing resources with AWS Config.</li>
-                                        </ul>
-            </section>
-            </section>
-            </section>
-            </section>
-            </section>
-            </section>
-            </section>
-            <section id="qualifications">
-                <h2>Qualifications</h2>
-                <ul>
-                    <li>Cisco Networking International Certificate</li>
-                    <li>CompTIA A+ International Certificate</li>
-                    <li>Microsoft Azure Administration Associate (AZ-104)</li>
-                    <li>System Support Certificate NQF L5</li>
-                    <li>Fortinet Network Security Expert 4 certification></li>
-                    <li>Fiber Optic Certificate</li>
-                    <li>Microsoft Azure Fundamentals (AZ-900)</li>
-                    <li>Microsoft Data Fundamentals (DP-900)</li>
-                </ul>     
-            </section>
-            <section id="cv">
-                <h5>Download My CV</h5>
-                <p>You can download my CV as a PDF by clicking the link below:</p>
-                <a href="c:\Users\NompieM\Downloads\NOMPIE MTHOMBENI 2025 (1).pdf" target="_blank">Download CV</a>
-            </section>
-        <section id="contact">
-            <h2>Contact</h2>
-            <p>Email: nmbrotty@gmail.com</p>
-            <P>Contact: 0814491343</P>
+            </div>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>10 Baffalo Thorn, Roodeport, 1709, South Africa</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>081 449 1343</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <a href="mailto:nmbrotty@gmail.com">nmbrotty@gmail.com</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section id="about">
+            <h2>About Me</h2>
+            <p>
+                I currently work at Technetium as a Support Technician. Recently obtained Microsoft Certified: Power BI Data Analyst Associate Certificate, 
+                I hold an AWS Cloud Practitioner, Cisco Networking Certificate, CompTIA A+ Certificate, Microsoft Azure Administration Associate AZ-104, 
+                System Support certificate, National Security 4), Fiber Optic Certificate, Microsoft Azure Fundamental AZ-900, Microsoft Data Fundamentals DP-900. 
+                I am looking for opportunities that will allow me to grow as a Cloud Engineer, Support Technician, or SQL Developer.
+            </p>
+            <div style="margin-top: 15px;">
+                <strong>Driving License:</strong> Category C1
+            </div>
         </section>
-    </main>
+        
+        <section id="experience">
+            <h2>Work Experience</h2>
+            
+            <div class="job">
+                <div class="job-header">
+                    <div>
+                        <h3>Application Support Technician</h3>
+                        <div class="company">Technetium</div>
+                        <div class="location">Johannesburg</div>
+                    </div>
+                    <div class="date">Dec 2022 - Present</div>
+                </div>
+                <ul>
+                    <li>Proficient in SQL Server, utilizing query tools to write SELECT statements for multi-table data retrieval, data sorting, and filtering</li>
+                    <li>Adept at using built-in functions, creating data groups, and aggregating results efficiently</li>
+                    <li>Skilled in modifying data with Transact-SQL, including INSERT, UPDATE, DELETE, and MERGE operations</li>
+                    <li>Experienced in barcode printing and RFID network maintenance</li>
+                    <li>Led new client deployment initiatives with an emphasis on seamless integration</li>
+                    <li>Provided daily customer support to enhance user experience and satisfaction</li>
+                    <li>Conducted training and testing sessions to ensure optimal software utilization</li>
+                    <li>Responsible for the creation and updates of training literature</li>
+                </ul>
+            </div>
+            
+            <div class="job">
+                <div class="job-header">
+                    <div>
+                        <h3>Fibre Optic Technician</h3>
+                        <div class="company">Openserve Contractor</div>
+                        <div class="location">Johannesburg</div>
+                    </div>
+                    <div class="date">Feb 2017 - Oct 2021</div>
+                </div>
+                <ul>
+                    <li>Expertly install fibre optic telecommunication and data networks</li>
+                    <li>Execute underground and underfloor fibre optic cabling with precision</li>
+                    <li>Conduct thorough testing and perform fault diagnostics and repairs</li>
+                    <li>Design, construct, and evaluate innovative fibre optic equipment</li>
+                    <li>Engage directly with customers through various communication channels</li>
+                    <li>Meticulously document detailed records for each project</li>
+                    <li>Provide services in residential and business settings</li>
+                    <li>Operate efficiently in diverse outdoor weather conditions</li>
+                </ul>
+            </div>
+            
+            <div class="job">
+                <div class="job-header">
+                    <div>
+                        <h3>ADSL Technician</h3>
+                        <div class="company">Bytes Technology Group</div>
+                        <div class="location">Johannesburg</div>
+                    </div>
+                    <div class="date">Oct 2015 - Feb 2017</div>
+                </div>
+                <ul>
+                    <li>Install, test, and maintain high-speed internet equipment</li>
+                    <li>Drill holes and assist with fiber optic cabling</li>
+                    <li>Connect wiring and cables to terminals</li>
+                    <li>Run diagnostic tests on equipment</li>
+                    <li>Troubleshoot network issues</li>
+                    <li>Provide technical support to customers</li>
+                    <li>Complete service documentation</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section id="education">
+            <h2>Education</h2>
+            
+            <div class="education">
+                <div class="edu-header">
+                    <div>
+                        <h3>Higher National Certificate: Azure Administrator (AZ-104)</h3>
+                        <div class="school">T-Systems ICT Academy</div>
+                        <div class="location">Johannesburg</div>
+                    </div>
+                    <div class="date">2023</div>
+                </div>
+                <ul>
+                    <li>Managed Azure identities and governance</li>
+                    <li>Implemented and managed storage solutions</li>
+                    <li>Deployed and managed Azure compute resources</li>
+                    <li>Configured and managed virtual networking</li>
+                    <li>Monitored and maintained Azure resources</li>
+                </ul>
+            </div>
+            
+            <div class="education">
+                <div class="edu-header">
+                    <div>
+                        <h3>Higher National Certificate: CompTIA A+</h3>
+                        <div class="school">Boston City Campus</div>
+                        <div class="location">Johannesburg</div>
+                    </div>
+                    <div class="date">2022</div>
+                </div>
+                <ul>
+                    <li>Proficient in identifying, using, and connecting hardware components and devices</li>
+                    <li>Skilled in installing and supporting Windows OS, including command line and client support</li>
+                    <li>Comprehensive understanding of Mac OS, Linux, and mobile operating systems</li>
+                    <li>Expertise in troubleshooting PC and mobile device issues, with focus on application security support</li>
+                    <li>Ability to explain network types and connections, including TCP/IP, WIFI, and SOHO</li>
+                </ul>
+            </div>
+            
+            <div class="education">
+                <div class="edu-header">
+                    <div>
+                        <h3>Higher National Diploma: IT Systems Support</h3>
+                        <div class="school">Bytes People Solution</div>
+                        <div class="location">Johannesburg</div>
+                    </div>
+                    <div class="date">2014</div>
+                </div>
+                <ul>
+                    <li>Ability to understand the role of technology in business context</li>
+                    <li>Ability to create integrated technology-based communication systems</li>
+                    <li>Ability to store, manage and retrieve data efficiently</li>
+                    <li>Ability to ensure secure information systems</li>
+                    <li>Ability to perform cost effectively in technology projects</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section id="certifications">
+            <h2>Certifications</h2>
+            <div class="certifications">
+                <div class="certification">
+                    <div class="cert-name">Microsoft Certified: Power BI Data Analyst Associate</div>
+                    <div class="cert-issuer">Microsoft</div>
+                </div>
+                
+                <div class="certification">
+                    <div class="cert-name">AWS Cloud Practitioner</div>
+                    <div class="cert-issuer">Amazon Web Services</div>
+                </div>
+                
+                <div class="certification">
+                    <div class="cert-name">Azure Administrator (AZ-104)</div>
+                    <div class="cert-issuer">Microsoft</div>
+                </div>
+                
+                <div class="certification">
+                    <div class="cert-name">CompTIA A+</div>
+                    <div class="cert-issuer">CompTIA</div>
+                </div>
+                
+                <div class="certification">
+                    <div class="cert-name">Microsoft Azure Fundamentals (AZ-900)</div>
+                    <div class="cert-issuer">Microsoft</div>
+                </div>
+                
+                <div class="certification">
+                    <div class="cert-name">Microsoft Data Fundamentals (DP-900)</div>
+                    <div class="cert-issuer">Microsoft</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="skills">
+            <h2>Skills</h2>
+            <div class="skills-container">
+                <div class="skill-category">
+                    <h4>Technical Skills</h4>
+                    <div class="skills-list">
+                        <span class="skill">SQL Server</span>
+                        <span class="skill">Transact-SQL</span>
+                        <span class="skill">Azure Administration</span>
+                        <span class="skill">AWS Cloud</span>
+                        <span class="skill">Power BI</span>
+                        <span class="skill">Barcode Printing</span>
+                        <span class="skill">RFID Systems</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h4>Networking</h4>
+                    <div class="skills-list">
+                        <span class="skill">Fibre Optic Installation</span>
+                        <span class="skill">ADSL</span>
+                        <span class="skill">Network Maintenance</span>
+                        <span class="skill">TCP/IP</span>
+                        <span class="skill">WIFI</span>
+                        <span class="skill">SOHO Networks</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h4>Other</h4>
+                    <div class="skills-list">
+                        <span class="skill">Hardware Support</span>
+                        <span class="skill">System Troubleshooting</span>
+                        <span class="skill">Customer Support</span>
+                        <span class="skill">Technical Documentation</span>
+                        <span class="skill">Training</span>
+                        <span class="skill">Project Deployment</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="references">
+            <h2>References</h2>
+            <div class="references">
+                <div class="reference">
+                    <div class="ref-name">Craig Jansen</div>
+                    <div class="ref-company">Technetium</div>
+                    <div class="ref-contact">082 449 4192</div>
+                </div>
+                
+                <div class="reference">
+                    <div class="ref-name">Tshepo Malebane</div>
+                    <div class="ref-company">Bytes People Solution</div>
+                    <div class="ref-contact">082 876 4371</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="courses">
+            <h2>Courses</h2>
+            <div class="courses">
+                <span class="course">T-Systems (Jan 2022 - Mar 2022)</span>
+                <span class="course">Boston College (Mar 2022 - Apr 2022)</span>
+                <span class="course">GirlCode (Jun 2022 - Aug 2022)</span>
+                <span class="course">Central Johannesburg College (Feb 2011 - Feb 2013)</span>
+                <span class="course">Microsoft: AZ-104</span>
+                <span class="course">CompTIA A+ 220:1001-1002</span>
+                <span class="course">AWS Cloud Practitioner</span>
+                <span class="course">IT Essential and CCNA</span>
+            </div>
+        </section>
+    </div>
+    
     <footer>
-        <p>&copy; 2025 Nompie Mthombeni Dube. All rights reserved.</p>
+        &copy; <span id="year"></span> Nompie Mthombeni Dube - All Rights Reserved
     </footer>
+    
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+    
+    <script>
+        // Update copyright year
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Animation on scroll
+        const sections = document.querySelectorAll('section');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+        
+        // Back to top button
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
 </body>
 </html>
